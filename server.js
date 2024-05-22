@@ -7,6 +7,8 @@ const connectDB = require('./config/db');
 require('dotenv').config()
 const app = express();
 
+const authRoures = require('./router/authRouter');
+const errorHandler = require('./middlelware/errormiddlerware');
 
 connectDB();
 
@@ -15,7 +17,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
+app.use('/api',authRoures)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT,()=>console.log('server running at port ' + PORT))
